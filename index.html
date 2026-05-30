@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — Meliana</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script src="assets/js/app.js"></script>
+</head>
+<body data-page="dashboard">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><span class="brand-icon">📷</span><div><strong>Meliana</strong><small>Absensi Wajah</small></div></div>
+      <nav class="nav">
+        <a href="index.html" class="nav-link active" data-page="dashboard"><span>🏠</span> Dashboard</a>
+        <a href="absensi.html" class="nav-link" data-page="absensi"><span>✅</span> Absensi</a>
+        <a href="registrasi.html" class="nav-link" data-page="registrasi"><span>👤</span> Daftar Wajah</a>
+        <a href="riwayat.html" class="nav-link" data-page="riwayat"><span>📋</span> Riwayat</a>
+        <a href="karyawan.html" class="nav-link" data-page="karyawan"><span>👥</span> Karyawan</a>
+      </nav>
+      <p class="sidebar-note">Data disimpan di browser (JSON). Cocok untuk GitHub Pages.</p>
+    </aside>
+    <main class="main-content">
+      <div class="page-header">
+        <h1>Dashboard</h1>
+        <p>Ringkasan absensi wajah hari ini</p>
+      </div>
+
+      <div class="card" style="margin-bottom: 1.5rem;">
+        <div class="card-title">Backup Data JSON</div>
+        <p style="color: var(--muted); font-size: 0.9rem; margin-bottom: 0.75rem;">
+          Ekspor/impor karyawan & absensi. Data tersimpan di <code>localStorage</code> per perangkat/browser.
+        </p>
+        <div id="backup-msg" class="alert alert-info" hidden></div>
+        <div class="btn-group">
+          <button type="button" id="btn-export" class="btn btn-secondary">Ekspor JSON</button>
+          <button type="button" id="btn-import" class="btn btn-secondary">Impor JSON</button>
+          <input type="file" id="input-import" accept="application/json,.json" hidden>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card primary"><div class="label">Total Karyawan</div><div class="value" id="stat-total">—</div></div>
+        <div class="stat-card success"><div class="label">Hadir Hari Ini</div><div class="value" id="stat-hadir">—</div></div>
+        <div class="stat-card warning"><div class="label">Belum Absen Masuk</div><div class="value" id="stat-belum">—</div></div>
+        <div class="stat-card"><div class="label">Total Catatan Hari Ini</div><div class="value" id="stat-catatan">—</div></div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Absensi Terbaru</div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Nama</th><th>Tipe</th><th>Waktu</th></tr></thead>
+              <tbody id="table-terbaru"><tr><td colspan="3" class="empty-state">Memuat...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Mulai Absensi</div>
+          <p style="color: var(--muted); margin-bottom: 1rem;">Buka halaman absensi, izinkan kamera, dan scan wajah.</p>
+          <a href="absensi.html" class="btn btn-primary">Buka Absensi →</a>
+          <a href="registrasi.html" class="btn btn-secondary" style="margin-left: 0.5rem;">Daftar Wajah Baru</a>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="assets/js/data-store.js"></script>
+  <script src="assets/js/backup-ui.js"></script>
+  <script src="assets/js/dashboard.js"></script>
+</body>
+</html>

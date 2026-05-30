@@ -3,7 +3,7 @@
  */
 const FaceEngine = (function () {
   const MODEL_CDN = 'https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1.7.14/model/';
-  const MODEL_LOCAL = (window.APP_BASE || '') + '/assets/models/';
+  const MODEL_LOCAL = (window.APP_BASE ? window.APP_BASE + '/' : '') + 'assets/models/';
   const MATCH_THRESHOLD = 0.6;
 
   let modelsLoaded = false;
@@ -224,32 +224,3 @@ const FaceEngine = (function () {
     averageDescriptors,
   };
 })();
-
-async function apiFetch(path, options = {}) {
-  const base = window.APP_BASE || '';
-  const url = `${base}${path}`;
-  let res;
-  try {
-    res = await fetch(url, {
-      headers: { 'Content-Type': 'application/json', ...(options.headers || {}) },
-      ...options,
-    });
-  } catch (e) {
-    return { ok: false, status: 0, data: { success: false, message: 'Tidak dapat terhubung ke server: ' + e.message } };
-  }
-
-  const text = await res.text();
-  let data;
-  try {
-    data = text ? JSON.parse(text) : {};
-  } catch {
-    const preview = text.replace(/\s+/g, ' ').slice(0, 80);
-    data = {
-      success: false,
-      message:
-        'Respon server bukan JSON. Pastikan Apache & MySQL XAMPP aktif. (' + (preview || res.status) + ')',
-    };
-  }
-  if (!res.ok && !data.message) data.message = 'Permintaan gagal (HTTP ' + res.status + ')';
-  return { ok: res.ok, status: res.status, data };
-}

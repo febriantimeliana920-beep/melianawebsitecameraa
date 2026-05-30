@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Karyawan — Meliana</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script src="assets/js/app.js"></script>
+</head>
+<body data-page="karyawan">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><span class="brand-icon">📷</span><div><strong>Meliana</strong><small>Absensi Wajah</small></div></div>
+      <nav class="nav">
+        <a href="index.html" class="nav-link" data-page="dashboard"><span>🏠</span> Dashboard</a>
+        <a href="absensi.html" class="nav-link" data-page="absensi"><span>✅</span> Absensi</a>
+        <a href="registrasi.html" class="nav-link" data-page="registrasi"><span>👤</span> Daftar Wajah</a>
+        <a href="riwayat.html" class="nav-link" data-page="riwayat"><span>📋</span> Riwayat</a>
+        <a href="karyawan.html" class="nav-link active" data-page="karyawan"><span>👥</span> Karyawan</a>
+      </nav>
+    </aside>
+    <main class="main-content">
+      <div class="page-header">
+        <h1>Data Karyawan</h1>
+        <p>Karyawan terdaftar dengan wajah aktif</p>
+      </div>
+      <div class="card" style="margin-bottom: 1.5rem;">
+        <div class="card-title">Backup Data JSON</div>
+        <div id="backup-msg" class="alert alert-info" hidden></div>
+        <div class="btn-group">
+          <button type="button" id="btn-export" class="btn btn-secondary">Ekspor JSON</button>
+          <button type="button" id="btn-import" class="btn btn-secondary">Impor JSON</button>
+          <input type="file" id="input-import" accept="application/json,.json" hidden>
+        </div>
+      </div>
+      <div class="card">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>NIP</th><th>Nama</th><th>Jabatan</th><th>Terdaftar</th><th>Aksi</th></tr></thead>
+            <tbody id="karyawan-body"><tr><td colspan="5" class="empty-state">Memuat...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="assets/js/data-store.js"></script>
+  <script src="assets/js/backup-ui.js"></script>
+  <script src="assets/js/karyawan-page.js"></script>
+</body>
+</html>

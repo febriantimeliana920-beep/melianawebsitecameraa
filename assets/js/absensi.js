@@ -29,7 +29,7 @@
   });
 
   async function loadDescriptors() {
-    const res = await apiFetch('/api/descriptors.php');
+    const res = await DataStore.getDescriptors();
     if (!res.ok || !res.data.success) {
       throw new Error(res.data.message || 'Gagal memuat data wajah');
     }
@@ -38,8 +38,10 @@
   }
 
   async function init() {
-    showLoader('Memuat model AI...');
+    showLoader('Memuat penyimpanan & model AI...');
     try {
+      await DataStore.ensureReady();
+      await (window.faceScriptsReady || Promise.resolve());
       await FaceEngine.loadModels((msg) => {
         loader.querySelector('p').textContent = msg;
       });
@@ -149,14 +151,11 @@
     btnManual && (btnManual.disabled = true);
 
     const foto = FaceEngine.captureFrame(video);
-    const res = await apiFetch('/api/absensi.php', {
-      method: 'POST',
-      body: JSON.stringify({
-        karyawan_id: match.person.id,
-        tipe: tipeAbsensi,
-        confidence: match.confidence,
-        foto: foto || undefined,
-      }),
+    const res = await DataStore.recordAbsensi({
+      karyawan_id: match.person.id,
+      tipe: tipeAbsensi,
+      confidence: match.confidence,
+      foto: foto || undefined,
     });
 
     recording = false;

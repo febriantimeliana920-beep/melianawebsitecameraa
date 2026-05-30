@@ -34,8 +34,10 @@
   }
 
   async function init() {
-    showLoader('Memuat model AI...');
+    showLoader('Memuat penyimpanan & model AI...');
     try {
+      await DataStore.ensureReady();
+      await (window.faceScriptsReady || Promise.resolve());
       await FaceEngine.loadModels((msg) => {
         loader.querySelector('p').textContent = msg;
       });
@@ -122,15 +124,12 @@
     const avgDescriptor = FaceEngine.averageDescriptors(samples);
     const foto = stream ? FaceEngine.captureFrame(video) : null;
 
-    const res = await apiFetch('/api/karyawan.php', {
-      method: 'POST',
-      body: JSON.stringify({
-        nip,
-        nama,
-        jabatan,
-        face_descriptor: avgDescriptor,
-        foto: foto || undefined,
-      }),
+    const res = await DataStore.addKaryawan({
+      nip,
+      nama,
+      jabatan,
+      face_descriptor: avgDescriptor,
+      foto: foto || undefined,
     });
 
     hideLoader();

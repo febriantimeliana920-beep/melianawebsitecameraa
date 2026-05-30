@@ -1,49 +1,58 @@
-# Absensi Wajah — Meliana
+# Meliana — Absensi Wajah (Static / GitHub Pages)
 
-Website absensi karyawan dengan pengenalan wajah via kamera web (browser). Dibangun untuk **XAMPP** (PHP + MySQL).
+Website absensi karyawan dengan **pengenalan wajah via kamera**. Versi ini berjalan **tanpa PHP/MySQL** — data disimpan sebagai **JSON di localStorage** browser.
 
 ## Fitur
 
-- **Absensi real-time** — kamera mendeteksi wajah dan mencocokkan dengan data terdaftar
-- **Daftar wajah** — registrasi 3 sampel wajah per karyawan
-- **Masuk / Keluar** — pilihan tipe absensi
-- **Dashboard & riwayat** — statistik harian dan log absensi
-- **Tanpa plugin** — AI berjalan di browser (face-api.js / TensorFlow.js)
+- Daftar wajah (3 sampel + descriptor 128D)
+- Absensi masuk/keluar otomatis + tombol manual
+- Dashboard & riwayat
+- **Ekspor / Impor JSON** (backup) di Dashboard & Karyawan
+- Face-api.js + TensorFlow (WebGL)
 
-## Persyaratan
+## Menjalankan lokal
 
-- XAMPP dengan Apache + MySQL aktif
-- PHP 8.0+
-- Browser modern (Chrome / Edge) dengan akses kamera
-- Koneksi internet (untuk memuat model AI pertama kali)
+1. Buka folder project di browser:
+   - **GitHub Pages lokal:** `npx serve .` lalu buka URL yang ditampilkan
+   - **XAMPP:** `http://localhost/melianawebsitekamera/index.html`
+2. Izinkan kamera (Chrome/Edge, HTTPS atau localhost)
+3. Koneksi internet untuk model AI (unduhan pertama)
 
-## Instalasi
+> Jangan buka file lewat `file://` — fetch seed JSON & kamera bisa gagal.
 
-1. Pastikan project ada di `htdocs/melianawebsitekamera`
-2. Buka **phpMyAdmin** → Import file `database/schema.sql`
-3. Sesuaikan kredensial DB di `config/database.php` jika perlu (default: user `root`, password kosong)
-4. Akses: **http://localhost/melianawebsitekamera/**
+## Deploy ke GitHub Pages
 
-## Alur penggunaan
+1. Buat repo GitHub, push seluruh isi folder (kecuali `legacy-php/` jika tidak perlu).
+2. **Settings → Pages → Source:** branch `main`, folder `/ (root)`.
+3. Buka: `https://<username>.github.io/<nama-repo>/index.html`
 
-1. **Daftar Wajah** — isi NIP & nama, nyalakan kamera, ambil 3 sampel, simpan
-2. **Absensi** — pilih Masuk/Keluar, mulai kamera, hadapkan wajah hingga tercatat otomatis
-3. **Riwayat** — lihat log per tanggal
+File `.nojekyll` sudah ada agar Jekyll tidak memblokir path `assets/`.
 
-## Catatan teknis
+### Subpath
 
-- Model AI diunduh dari CDN saat halaman absensi/registrasi pertama dibuka (beberapa detik)
-- Ambang kecocokan wajah: jarak euclidean ≤ 0.55 (atur di `assets/js/face-engine.js`)
-- Absensi duplikat diblokir jika tipe sama dalam 2 menit terakhir
-- Kamera hanya berjalan di **localhost** atau **HTTPS**
+Semua link memakai path relatif (`assets/`, `index.html`). `assets/js/app.js` menghitung `APP_BASE` otomatis untuk subfolder repo.
 
-## Struktur folder
+## Penyimpanan data
+
+| Lokasi | Isi |
+|--------|-----|
+| `localStorage` | Data aktif (karyawan + absensi) |
+| `data/karyawan.json` | Seed kosong saat pertama kunjung |
+| `data/absensi.json` | Seed kosong saat pertama kunjung |
+| File backup | Unduhan manual via **Ekspor JSON** |
+
+Data **per browser/perangkat**. Untuk pindah perangkat, gunakan Ekspor → Impor.
+
+## Versi PHP (lama)
+
+Backend PHP + MySQL ada di folder **`legacy-php/`** (XAMPP). Gunakan jika butuh server database bersama.
+
+## Struktur
 
 ```
-api/           Endpoint JSON (karyawan, absensi, descriptors, stats)
-assets/        CSS & JavaScript
-config/        Koneksi database
-database/      SQL schema
-includes/      Layout header/footer
-uploads/       Foto snapshot (dibuat otomatis)
+index.html, registrasi.html, absensi.html, riwayat.html, karyawan.html
+assets/js/   app.js, data-store.js, face-engine.js, ...
+assets/css/
+data/        seed JSON
+legacy-php/  versi PHP (opsional)
 ```

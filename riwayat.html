@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Riwayat — Meliana</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script src="assets/js/app.js"></script>
+</head>
+<body data-page="riwayat">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><span class="brand-icon">📷</span><div><strong>Meliana</strong><small>Absensi Wajah</small></div></div>
+      <nav class="nav">
+        <a href="index.html" class="nav-link" data-page="dashboard"><span>🏠</span> Dashboard</a>
+        <a href="absensi.html" class="nav-link" data-page="absensi"><span>✅</span> Absensi</a>
+        <a href="registrasi.html" class="nav-link" data-page="registrasi"><span>👤</span> Daftar Wajah</a>
+        <a href="riwayat.html" class="nav-link active" data-page="riwayat"><span>📋</span> Riwayat</a>
+        <a href="karyawan.html" class="nav-link" data-page="karyawan"><span>👥</span> Karyawan</a>
+      </nav>
+    </aside>
+    <main class="main-content">
+      <div class="page-header">
+        <h1>Riwayat Absensi</h1>
+        <p>Daftar catatan absensi per tanggal</p>
+      </div>
+      <div class="card" style="margin-bottom: 1.5rem;">
+        <form id="form-riwayat" style="display: flex; gap: 1rem; align-items: flex-end; flex-wrap: wrap;">
+          <div class="form-group" style="margin-bottom: 0;">
+            <label for="tanggal">Tanggal</label>
+            <input type="date" id="tanggal" name="tanggal">
+          </div>
+          <button type="submit" class="btn btn-primary">Tampilkan</button>
+        </form>
+      </div>
+      <div class="card">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Waktu</th><th>NIP</th><th>Nama</th><th>Jabatan</th><th>Tipe</th><th>Akurasi</th></tr></thead>
+            <tbody id="riwayat-body"><tr><td colspan="6" class="empty-state">Memuat...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="assets/js/data-store.js"></script>
+  <script src="assets/js/riwayat-page.js"></script>
+</body>
+</html>
